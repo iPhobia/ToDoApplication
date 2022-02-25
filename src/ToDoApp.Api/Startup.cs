@@ -10,14 +10,19 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+using ToDoApp.Core.Interfaces;
+using ToDoApp.Core.Services;
 
 namespace ToDoApp.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private IWebHostEnvironment _env;
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -25,6 +30,25 @@ namespace ToDoApp.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            if (_env.IsDevelopment())
+            {
+                services.AddScoped<ITodoTaskGroupsService, TodoTodoTaskGroupsServiceStub>();
+            }
+            else
+            {
+                services.AddScoped<ITodoTaskGroupsService, TodoTodoTaskGroupsService>();
+            }
+            
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "ToDo Api",
+                    Description = "Api for managing todo tasks ",
+                });
+            });
+            
             services.AddControllers();
         }
 
@@ -36,11 +60,16 @@ namespace ToDoApp.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                options.RoutePrefix = "swagger";
+            });
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

@@ -1,6 +1,6 @@
 namespace ToDoApp.Core.Entites
 {
-    public class Task
+    public class ToDoTask
     {
         public int Id { get; set; }
         public string Content { get; set; }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ToDoApp.Core.DTO
 {
-    public class TaskDto : IValidatableObject
+    public class TodoTaskDto : IValidatableObject
     {
         public string Content { get; set; }
         
