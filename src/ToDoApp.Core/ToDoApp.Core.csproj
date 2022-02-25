@@ -5,8 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Entites" />
-      <Folder Include="Interfaces" />
+      <Folder Include="DTO\Responses" />
     </ItemGroup>
 
 </Project>

@@ -9,5 +9,13 @@
       <Folder Include="Controllers" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ToDoApp.Core\ToDoApp.Core.csproj" />
+    </ItemGroup>
+
 
 </Project>
