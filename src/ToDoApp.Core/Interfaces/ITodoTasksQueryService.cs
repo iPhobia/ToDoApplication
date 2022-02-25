@@ -1,6 +1,6 @@
 namespace ToDoApp.Core.Interfaces
 {
-    public class IRepository
+    public class ITodoTasksQueryService
     {
         
     }

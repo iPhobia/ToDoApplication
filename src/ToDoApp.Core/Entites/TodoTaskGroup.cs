@@ -6,7 +6,7 @@ namespace ToDoApp.Core.Entites
     {
         public int Id { get; set; }
         public string GroupName { get; set; }
-        
-        public virtual ICollection<ToDoTask> TodoTasks { get; set; }
+
+        public virtual ICollection<TodoTask> Tasks { get; set; } = new List<TodoTask>();
     }
 }

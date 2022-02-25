@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ToDoApp.Core.DTO;
 using ToDoApp.Core.DTO.Requests;
 using ToDoApp.Core.Entites;
 using ToDoApp.Core.Interfaces;
@@ -17,12 +18,12 @@ namespace ToDoApp.Api.Controllers
 
         public TodoTaskGroupsController(ITodoTaskGroupsService todoTaskGroupsService)
         {
-            _todoTaskGroupsService = todoTaskGroupsService;
+            _todoTaskGroupsService = todoTaskGroupsService ?? throw new ArgumentNullException(nameof(todoTaskGroupsService));;
         }
         
-        // GET: api/groups
+        // GET: api/todoTaskGroups
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TodoTaskGroup>>> Get()
+        public async Task<ActionResult<IEnumerable<TodoTaskGroupDto>>> Get()
         {
             try
             {
@@ -52,7 +53,7 @@ namespace ToDoApp.Api.Controllers
             }
         }
 
-        // PUT: api/groups/5
+        // PUT: api/todoTaskGroups/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] string newTaskGroupName)
         {
@@ -83,8 +84,8 @@ namespace ToDoApp.Api.Controllers
             }
         }
 
-        // DELETE: api/groups/5
-        [HttpDelete("{id}")]
+        // DELETE: api/todoTaskGroups/5
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -97,6 +98,22 @@ namespace ToDoApp.Api.Controllers
                 await _todoTaskGroupsService.DeleteTodoTaskGroupById(id);
                 
                 return Ok();
+            }
+            catch (Exception e)
+            {
+                return Problem(e.Message);
+            }
+        }
+
+        // GET: api/todoTaskGroups/5/tasks
+        [HttpGet("{id:int}/tasks")]
+        public async Task<ActionResult<IEnumerable<TodoTaskDto>>> GetTasksByGroupId(int id)
+        {
+            try
+            {
+                var response = await _todoTaskGroupsService.GetTasksByGroupId(id);
+
+                return Ok(response);
             }
             catch (Exception e)
             {

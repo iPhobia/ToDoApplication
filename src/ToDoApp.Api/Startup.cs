@@ -32,11 +32,13 @@ namespace ToDoApp.Api
         {
             if (_env.IsDevelopment())
             {
-                services.AddScoped<ITodoTaskGroupsService, TodoTodoTaskGroupsServiceStub>();
+                services.AddScoped<ITodoTaskGroupsService, TodoTaskGroupsServiceStub>();
+                services.AddScoped<ITodoTasksService, TodoTasksServiceStub>();
             }
             else
             {
-                services.AddScoped<ITodoTaskGroupsService, TodoTodoTaskGroupsService>();
+                services.AddScoped<ITodoTaskGroupsService, TodoTaskGroupsService>();
+                services.AddScoped<ITodoTaskGroupsService, TodoTaskGroupsService>();
             }
             
             services.AddSwaggerGen(options =>
