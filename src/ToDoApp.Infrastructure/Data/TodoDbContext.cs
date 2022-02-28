@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using ToDoApp.Core.Entites;
@@ -17,7 +18,10 @@ namespace ToDoApp.Infrastructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=tododb;Trusted_Connection=True;");
+            //optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=tododb;Trusted_Connection=True;");
+            var connectionString = Environment.GetEnvironmentVariable("connectionString");
+            Console.WriteLine(connectionString);
+            optionsBuilder.UseSqlServer(connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
