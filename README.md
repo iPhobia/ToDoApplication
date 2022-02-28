@@ -11,3 +11,4 @@ or
 ```
 docker-compose up --build
 ```
+then enter in browser *host*:*port*/swagger
