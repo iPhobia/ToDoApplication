@@ -12,7 +12,7 @@ namespace ToDoApp.Core.DTO.Requests
         {
             if (string.IsNullOrEmpty(Content))
                 yield return new ValidationResult("task content cannot be null or empty");
-            if (!GroupId.HasValue || GroupId <= 0)
+            if (GroupId <= 0)
                 yield return new ValidationResult("invalid value for group id");
         }
     }

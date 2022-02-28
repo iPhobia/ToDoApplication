@@ -58,12 +58,17 @@ namespace ToDoApp.Api.Controllers
         {
             try
             {
+                if (id <= 0)
+                {
+                    return Problem("invalid value for id", statusCode: StatusCodes.Status400BadRequest);
+                }
+                
                 if (string.IsNullOrEmpty(taskContent))
                 {
                     return Problem("task content cannot be null or empty", statusCode: StatusCodes.Status400BadRequest);
                 }
                 
-                await _todoTasksService.UpdateTodoTaskContent(taskContent);
+                await _todoTasksService.UpdateTodoTaskContent(id, taskContent);
                 
                 return Ok();
             }

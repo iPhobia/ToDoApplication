@@ -1,27 +1,42 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ToDoApp.Core.DTO;
 using ToDoApp.Core.DTO.Requests;
-using ToDoApp.Core.Entites;
 using ToDoApp.Core.Interfaces;
 
 namespace ToDoApp.Core.Services
 {
     public class TodoTasksService : ITodoTasksService
     {
-        public Task<IEnumerable<TodoTaskDto>> GetAllTodoTasks()
+        private readonly ITodoTasksQueryService _todoTasksQueryService;
+
+        public TodoTasksService(ITodoTasksQueryService todoTasksQueryService)
         {
-            throw new System.NotImplementedException();
+            _todoTasksQueryService =
+                todoTasksQueryService ?? throw new ArgumentNullException(nameof(todoTasksQueryService));
         }
 
-        public Task UpdateTodoTaskContent(string newContent)
+        public async Task<IEnumerable<TodoTaskDto>> GetAllTodoTasks()
         {
-            throw new System.NotImplementedException();
+           var tasks =  await _todoTasksQueryService.GetAllTodoTasks();
+
+           return tasks.Select(t => new TodoTaskDto
+           {
+               Id = t.Id,
+               Content = t.Content
+           });
         }
 
-        public Task<int> CreateTodoTask(CreateTodoTaskRequest request)
+        public async Task UpdateTodoTaskContent(int id, string newContent)
         {
-            throw new System.NotImplementedException();
+            await _todoTasksQueryService.UpdateTodoTaskContent(id, newContent);
+        }
+
+        public async Task<int> CreateTodoTask(CreateTodoTaskRequest request)
+        {
+           return await _todoTasksQueryService.CreateTodoTask(request);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace ToDoApp.Core.Services
             };
         }
 
-        public Task UpdateTodoTaskContent(string newContent)
+        public Task UpdateTodoTaskContent(int id, string newContent)
         {
             return Task.CompletedTask;
         }

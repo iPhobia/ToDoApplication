@@ -13,12 +13,15 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ToDoApp.Core.Interfaces;
 using ToDoApp.Core.Services;
+using ToDoApp.Infrastructure;
+using ToDoApp.Infrastructure.Data.QueryServices;
 
 namespace ToDoApp.Api
 {
     public class Startup
     {
-        private IWebHostEnvironment _env;
+        private readonly IWebHostEnvironment _env;
+        
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
@@ -38,7 +41,7 @@ namespace ToDoApp.Api
             else
             {
                 services.AddScoped<ITodoTaskGroupsService, TodoTaskGroupsService>();
-                services.AddScoped<ITodoTaskGroupsService, TodoTaskGroupsService>();
+                services.AddScoped<ITodoTasksService, TodoTasksService>();
             }
             
             services.AddSwaggerGen(options =>
@@ -51,6 +54,12 @@ namespace ToDoApp.Api
                 });
             });
             
+            services.ConfigureDatabase();
+            
+            //query services
+            services.AddScoped<ITodoTaskGroupsQueryService, TodoTaskGroupsQueryService>();
+            services.AddScoped<ITodoTasksQueryService, TodoTasksQueryService>();
+
             services.AddControllers();
         }
 

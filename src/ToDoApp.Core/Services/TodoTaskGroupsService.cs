@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ToDoApp.Core.DTO;
 using ToDoApp.Core.DTO.Requests;
@@ -9,29 +11,50 @@ namespace ToDoApp.Core.Services
 {
     public class TodoTaskGroupsService : ITodoTaskGroupsService
     {
-        public Task<IEnumerable<TodoTaskGroupDto>> GetAllTodoTaskGroups()
+        private readonly ITodoTaskGroupsQueryService _queryService;
+
+        public TodoTaskGroupsService(ITodoTaskGroupsQueryService queryService)
         {
-            throw new System.NotImplementedException();
+            _queryService = queryService ?? throw new ArgumentNullException(nameof(queryService));
         }
 
-        public Task<int> CreateTodoTaskGroup(CreateTodoTaskGroupRequest request)
+        public async Task<IEnumerable<TodoTaskGroupDto>> GetAllTodoTaskGroups()
         {
-            throw new System.NotImplementedException();
+            var todoTaskGroups =  await _queryService.GetAllTodoTaskGroups();
+
+            return todoTaskGroups.Select(g => new TodoTaskGroupDto
+            {
+                Id = g.Id,
+                GroupName = g.GroupName
+            });
         }
 
-        public Task DeleteTodoTaskGroupById(int groupId)
+        public async Task<int> CreateTodoTaskGroup(CreateTodoTaskGroupRequest request)
         {
-            throw new System.NotImplementedException();
+            var createdGroupId = await _queryService.CreateTodoTaskGroup(request);
+
+            return createdGroupId;
         }
 
-        public Task UpdateTodoTaskGroupName(int groupId, string newName)
+        public async Task DeleteTodoTaskGroupById(int groupId)
         {
-            throw new System.NotImplementedException();
+            await _queryService.DeleteTodoTaskGroupById(groupId);
         }
 
-        public Task<IEnumerable<TodoTaskDto>> GetTasksByGroupId(int groupId)
+        public async Task UpdateTodoTaskGroupName(int groupId, string newName)
         {
-            throw new System.NotImplementedException();
+            await _queryService.UpdateTodoTaskGroupName(groupId, newName);
+        }
+
+        public async Task<IEnumerable<TodoTaskDto>> GetTasksByGroupId(int groupId)
+        { 
+            var tasks = await _queryService.GetTasksByGroupId(groupId);
+            
+            return tasks.Select(t => new TodoTaskDto
+            {
+                Id = t.Id,
+                Content = t.Content
+            });
         }
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ToDoApp.Core.DTO;
 using ToDoApp.Core.DTO.Requests;
-using ToDoApp.Core.Entites;
+using ToDoApp.Core.Exceptions;
 using ToDoApp.Core.Interfaces;
 
 namespace ToDoApp.Api.Controllers
@@ -78,6 +78,10 @@ namespace ToDoApp.Api.Controllers
                 
                 return Ok();
             }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
             catch (Exception e)
             {
                 return Problem(e.Message);
@@ -94,10 +98,14 @@ namespace ToDoApp.Api.Controllers
                 {
                     return Problem("invalid value for id", statusCode: StatusCodes.Status400BadRequest);
                 }
-                
+
                 await _todoTaskGroupsService.DeleteTodoTaskGroupById(id);
-                
+
                 return Ok();
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound(e.Message);
             }
             catch (Exception e)
             {
@@ -114,6 +122,10 @@ namespace ToDoApp.Api.Controllers
                 var response = await _todoTaskGroupsService.GetTasksByGroupId(id);
 
                 return Ok(response);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound(e.Message);
             }
             catch (Exception e)
             {
