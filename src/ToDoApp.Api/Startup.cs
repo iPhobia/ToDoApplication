@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ToDoApp.Core.Interfaces;
 using ToDoApp.Core.Services;
@@ -54,7 +47,8 @@ namespace ToDoApp.Api
                 });
             });
             
-            services.ConfigureDatabase();
+            
+            services.ConfigureDatabase(Configuration.GetValue<string>("connectionString"));
             
             //query services
             services.AddScoped<ITodoTaskGroupsQueryService, TodoTaskGroupsQueryService>();

@@ -12,6 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution 
 		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9D0F167D-1698-4D02-A22B-705032C73EFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoApp.Integration.Tests", "..\tests\ToDoApp.Integration.Tests\ToDoApp.Integration.Tests.csproj", "{BFD30F98-A76B-442C-BEA9-6459494B3BE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,12 @@ Global
 		{25C5A379-94C4-46CC-ADB5-775A477EAD1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25C5A379-94C4-46CC-ADB5-775A477EAD1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25C5A379-94C4-46CC-ADB5-775A477EAD1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFD30F98-A76B-442C-BEA9-6459494B3BE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFD30F98-A76B-442C-BEA9-6459494B3BE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFD30F98-A76B-442C-BEA9-6459494B3BE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFD30F98-A76B-442C-BEA9-6459494B3BE4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BFD30F98-A76B-442C-BEA9-6459494B3BE4} = {9D0F167D-1698-4D02-A22B-705032C73EFD}
 	EndGlobalSection
 EndGlobal
